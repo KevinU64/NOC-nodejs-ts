@@ -30,6 +30,8 @@ export class LogEntity {
     static fromJson = ( json: string ): LogEntity => {
         const { message, level, createdAt, origin } = JSON.parse(json);
 
+        json = ( json === '' ) ? '{}': json;
+
         const log = new LogEntity( {
             message,
             level,
@@ -39,6 +41,16 @@ export class LogEntity {
 
         return log;
 
-    }
+    };
+
+    // Convertir la repuesta de mongo en LogEntity
+    static fromObject = ( object: { [key: string]: any } ): LogEntity => {
+        const { message, level, createdAt, origin } = object;
+        const log = new LogEntity({
+            message, level, createdAt, origin
+        });
+
+        return log;
+    };
 
 }
