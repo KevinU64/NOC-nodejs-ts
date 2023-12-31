@@ -18,7 +18,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
 
         try {
             
-            const sent = await this.emailService.sendEmailWithFileSystemLogs
+            const sent = await this.emailService.sendEmailWithFileSystemLogs(to);
             if ( !sent ) {
                 throw new Error('Email log not sent');
             }
@@ -29,6 +29,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
                 origin: 'send-email-logs.ts',
             });
             this.logRepository.saveLog(log);
+
             return true;
         } catch (error) {
 
@@ -38,10 +39,9 @@ export class SendEmailLogs implements SendLogEmailUseCase {
                 origin: 'send-email-logs.ts',
             });
             this.logRepository.saveLog(log);
+
             return false;
         }
-
-        return true;
     };
 
 }
